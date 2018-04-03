@@ -1,6 +1,12 @@
 "use strict";
 $(document).ready(function() {
   init();
+  $("#getButton").click(function() {
+    $.get("results.php");
+  });
+  $("#postButton").click(function() {
+    $.post("results.php",{name:"John",time:"2pm"});
+  });
 })
 
 var colors = ["DeepSkyBlue", "Green", "Red", "Yellow", "Purple"];

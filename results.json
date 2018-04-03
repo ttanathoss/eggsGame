@@ -1,0 +1,9 @@
+[
+  {user:"test1",result:40}
+  {user:"test2",result:1050}
+  {user:"test1",result:2034}
+  {user:"test3",result:6012}
+  {user:"test4",result:-5}
+  {user:"test4",result:500}
+  {user:"test2",result:3034}
+]

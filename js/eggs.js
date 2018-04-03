@@ -15,8 +15,6 @@ var stage;
 var eggs;
 var eggsMatrix;
 var points;
-// var eggWidth;
-// var eggHeight;
 
 function init() {
   stage = new createjs.Stage("eggsCanvas");
@@ -64,8 +62,6 @@ function createEgg(eggWidth, eggHeight, positionX, positionY, indX, indY) {
   egg.graphics.drawEllipse(0, 0, eggWidth, eggHeight);
   egg.x = positionX;
   egg.y = positionY;
-  egg.newX = positionX;
-  egg.newY = positionY;
   egg.indX = indX;
   egg.indY = indY;
   egg.color = color;
@@ -144,22 +140,13 @@ function switchEggsInColumn(x, oldEggIndY, newEggIndY) {
   eggsMatrix[x][oldEgg.indY] = newEgg;
   eggsMatrix[x][newEgg.indY] = oldEgg;
 
-  var tmp = newEgg.y;
-  // newEgg.y = oldEgg.y;
-  newEgg.newY = oldEgg.y;
-  oldEgg.y = tmp;
-
-  tmp = newEgg.indY;
+  var tmp = newEgg.indY;
   newEgg.indY = oldEgg.indY;
   oldEgg.indY = tmp;
 }
 
 function shiftColumns(emptyColumns) {
   emptyColumns.sort();
-  // while(emptyColumns.length != 0)
-  //   for(var x=emptyColumns.pop(); x<countX-1; ++x)
-  //     for(var y=0; y<countY; ++y)
-  //       switchEggsInRow(eggsMatrix[x][y], eggsMatrix[x+1][y]);
   var x = emptyColumns[0];
   var freePlace = [];
   for(;x<countX; ++x) {
@@ -169,8 +156,6 @@ function shiftColumns(emptyColumns) {
       freePlace.push(x);
       switchEggsColumns(freePlace.shift(), x);
     }
-    // x -> push
-    // lub x przemieść i push
   }
 }
 
@@ -178,7 +163,7 @@ function switchEggsColumns(x1, x2) {
   for(var y=0; y<countY; ++y) {
    var egg1 = eggsMatrix[x1][y];
    var egg2 = eggsMatrix[x2][y];
-   switchEggsInRow(egg1,egg2);
+   switchEggsInRow(egg1, egg2);
   }
 }
 
@@ -186,12 +171,7 @@ function switchEggsInRow(oldEgg, newEgg) {
   eggsMatrix[oldEgg.indX][oldEgg.indY] = newEgg;
   eggsMatrix[newEgg.indX][newEgg.indY] = oldEgg;
 
-  var tmp = newEgg.x;
-  // newEgg.x = oldEgg.x;
-  newEgg.newX = oldEgg.x;
-  oldEgg.x = tmp;
-
-  tmp = newEgg.indX;
+  var tmp = newEgg.indX;
   newEgg.indX = oldEgg.indX;
   oldEgg.indX = tmp;
 }
@@ -212,9 +192,9 @@ function updatePoints(eggsCount) {
 
 function calculatePoints(n) {
   if(n==1) return -10;
-  var x1=Math.pow(n,3)/3;
-  var x2=Math.pow(n,2);
-  var x3=n+n/2+n/6;
+  var x1 = Math.pow(n,3)/3;
+  var x2 = Math.pow(n,2);
+  var x3 = n+n/2+n/6;
   return x1-x2+x3;
 }
 

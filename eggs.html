@@ -37,6 +37,32 @@
     </div>
   </div>
 
+  <div class="modal backdrop" id="resultsListModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Lista wyników</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table>
+            <thead><tr><th>User</th><th>Result</th></tr></thead>
+            <tbody data-bind="foreach: results">
+              <td data-bind="text: user"></td>
+              <td data-bind="text: result"></td>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary play-again">Jeszcze raz</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Wystarczy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div>
     <button class="btn btn-primary" id="getButton">GET</button>
     <button class="btn btn-primary" id="postButton">POST</button>
@@ -46,5 +72,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
   <script src="https://code.createjs.com/1.0.0/tweenjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
   <script src="js/eggs.js"></script>
 </html>

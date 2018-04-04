@@ -1,8 +1,15 @@
 "use strict";
 $(document).ready(function() {
   init();
+  var resultsData = [];
+  var results = ko.observableArray(resultsData);
+  ko.applyBindings({results: results});
+
   $("#getButton").click(function() {
-    $.get("results.php");
+    $.get("results.php").done(function(data) {
+      results(data);
+    });
+    $("#resultsListModal").modal("show");
   });
   $("#postButton").click(function() {
     $.post("results.php",{name:"John",time:"2pm"});

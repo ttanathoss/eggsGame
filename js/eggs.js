@@ -12,7 +12,7 @@ $(document).ready(function() {
     $("#resultsListModal").modal("show");
   });
   $("#postButton").click(function() {
-    $.post("results.php",{name:"John",time:"2pm"});
+    $.post("results.php",{user:"John",result:2});
   });
 })
 

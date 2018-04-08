@@ -1,13 +1,22 @@
 "use strict";
 $(document).ready(function() {
-  init();
   ko.applyBindings(ViewModel);
+  $("#welcomeModal").on("hide.bs.modal", function(e) {
+    if(!ViewModel.nickDefined()) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      return false;
+    }
+    else
+      init();
+  });
+  $("#welcomeModal").modal("show");
+
 
   $("#getButton").click(function() {
     $.get("results.php").done(function(data) {
-      ViewModel.resultsList(data.sort(compareResults));
+      handleData(data);
     });
-    $("#resultsListModal").modal("show");
   });
   $("#postButton").click(function() {
     $.post("results.php",{user:"John",result:2});
@@ -28,8 +37,20 @@ var eggsMatrix;
 
 var ViewModel = {
   resultsList: ko.observableArray(),
+  resultsList1: ko.observableArray(),
+  resultsList2: ko.observableArray(),
   points: ko.observable(),
-  colors: ko.observableArray()
+  nick: ko.observable(),
+  nickDefined: function() {
+    return this.nick() !== undefined && this.nick() !== "";
+  },
+  colors: ko.observableArray(),
+  shouldShowResult: ko.observable(true),
+  shouldShowResultsList: ko.observable(false),
+  toggleResultView: function() {
+    this.shouldShowResult(!this.shouldShowResult());
+    this.shouldShowResultsList(!this.shouldShowResultsList());
+  }
 };
 
 function init() {
@@ -52,7 +73,12 @@ function init() {
 }
 
 function initGame(eggWidth, eggHeight) {
-  eggs = new createjs.Container();
+  if(eggs !== undefined)
+    eggs.removeAllChildren();
+  else {
+    eggs = new createjs.Container();
+    stage.addChild(eggs);
+  }
   eggsMatrix = new Array(countX);
   for(var i=0; i<countX; ++i)
     eggsMatrix[i] = new Array(countY);
@@ -64,12 +90,8 @@ function initGame(eggWidth, eggHeight) {
       eggsMatrix[i][j] = egg;
     }
 
-  stage.addChild(eggs);
-
   ViewModel.points(0);
-  $.get("results.php").done(function(data) {
-    ViewModel.resultsList(data.sort(compareResults));
-  });
+  $.get("results.php").done(function(data) { handleData(data); });
 
   var colorCount = {};
   for(var i=0; i<eggs.children.length; i++) {
@@ -237,8 +259,25 @@ function checkGameOver() {
 
 function showGameOver() {
   $("#resultModal").modal("show");
+  var data = ViewModel.resultsList();
+  data.push({user: ViewModel.nick(), result: ViewModel.points(), current: true});
+  handleData(data);
 }
 
 function compareResults(res1,res2) {
   return res2.result-res1.result;
+}
+
+function handleData(data) {
+  var ind = 1;
+  var data = data.sort(compareResults).map(function(x) {
+    x["no"] = ind++;
+    return x;
+  });
+  ViewModel.resultsList(data);
+  var split = Math.ceil(data.length/2);
+  ViewModel.resultsList1([]);
+  ViewModel.resultsList1(data.slice(0,split));
+  ViewModel.resultsList2([]);
+  ViewModel.resultsList2(data.slice(split,data.length));
 }

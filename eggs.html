@@ -17,6 +17,27 @@
     </div>
   </div>
 
+  <div class="modal backdrop" id="welcomeModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Wesołego alleluja!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Witaj! Z okazji wielkanocy przygotowałem dla Ciebie małą zabawę: spróbuj złapać wszystkie jajka!</p>
+          <p>Instrukcja TODO</p>
+          <p>Żeby zacząć podaj swój nick: <input type="text" data-bind="textInput: nick" /></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-bind="enable: nick" data-dismiss="modal">Zagraj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal backdrop" id="resultModal">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -27,54 +48,45 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="result">
-          <p>Udało Ci się uzykać <span class="points"></span> punktów.</p>
+          <div class="result" data-bind="visible: shouldShowResult">
+            <p>Udało Ci się uzykać <span data-bind="text: points"></span> punktów.</p>
             <img src="img/overImg.png" class="overImg" />
-            <p>Czy chcesz spróbować jeszcze raz?</p>
+            <button type="button" class="btn btn-info" data-bind="click: toggleResultView">Pokaż listę wyników</button>
           </div>
-          <div class="resultsList">
-            <table>
-              <thead><tr><th>Użytkownik</th><th>Wynik</th></tr></thead>
-              <tbody data-bind="foreach: resultsList">
-                <td data-bind="text: user"></td>
-                <td data-bind="text: result"></td>
-              </tbody>
-            </table>
+          <div class="resultsList" data-bind="visible: shouldShowResultsList">
+            <div class="resultsList clearfix">
+              <table class="resultsList">
+                <thead><tr><th class="NOColumn">Poz</th><th class="userColumn">Nick</th><th class="pointsColumn">Wynik</th></tr></thead>
+                <tbody data-bind="foreach: resultsList1">
+                  <tr data-bind="css: { highlight: current }">
+                    <td class="NOColumn" data-bind="text: no"></td>
+                    <td class="userColumn" data-bind="text: user"></td>
+                    <td class="pointsColumn" data-bind="text: result"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="resultsList">
+                <thead><tr><th class="NOColumn">Poz</th><th class="userColumn">Nick</th><th class="pointsColumn">Wynik</th></tr></thead>
+                <tbody data-bind="foreach: resultsList2">
+                  <tr data-bind="css: { highlight: current }">
+                    <td class="NOColumn" data-bind="text: no"></td>
+                    <td class="userColumn" data-bind="text: user"></td>
+                    <td class="pointsColumn" data-bind="text: result"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button type="button" class="btn btn-info" data-bind="click: toggleResultView">Pokaż mój wynik</button>
           </div>
+          <p>Czy chcesz spróbować jeszcze raz?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary play-again">Jeszcze raz</button>
+          <button type="button" class="btn btn-success play-again">Jeszcze raz</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Wystarczy</button>
         </div>
       </div>
     </div>
   </div>
-<!-- 
-  <div class="modal backdrop" id="resultsListModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Lista wyników</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <table>
-            <thead><tr><th>User</th><th>Result</th></tr></thead>
-            <tbody data-bind="foreach: results">
-              <td data-bind="text: user"></td>
-              <td data-bind="text: result"></td>
-            </tbody>
-          </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary play-again">Jeszcze raz</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Wystarczy</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
   <div>
     <button class="btn btn-primary" id="getButton">GET</button>

@@ -7,7 +7,7 @@ body {
 }
 
 .gameWrapper {
-  margin: 25px auto 0;
+  margin: 0 auto;
   width: 725px;
 }
 
@@ -17,7 +17,7 @@ body {
 
 .boardWrapper {
   height: 805px;
-  margin: 25px auto 0;
+  margin: 0 auto;
   width: 725px;
 }
 
@@ -28,5 +28,35 @@ body {
 }
 
 .overImg {
+  margin-top: -20px;
   width: 100%;
+}
+
+div.resultsList {
+  padding-bottom: 10px;
+}
+
+table.resultsList {
+  float: left;
+  margin: 0 1%;
+  table-layout: fixed;
+  width: 48%;
+  .highlight {
+    background-color: #efe;
+    color: green;
+  }
+  td {
+    border-top: 1px solid #ccc;
+  }
+  td, th {
+    padding: 2px 7px;
+  }
+  .NOColumn {
+    border-right: 1px solid #ccc;
+    width: 20%;
+  }
+  .userColumn {
+    overflow: hidden;
+    text-align: right;
+  }
 }

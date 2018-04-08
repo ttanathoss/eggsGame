@@ -1,13 +1,11 @@
 "use strict";
 $(document).ready(function() {
   init();
-  var resultsData = [];
-  var results = ko.observableArray(resultsData);
-  ko.applyBindings({results: results});
+  ko.applyBindings(ViewModel);
 
   $("#getButton").click(function() {
     $.get("results.php").done(function(data) {
-      results(data);
+      ViewModel.resultsList(data.sort(compareResults));
     });
     $("#resultsListModal").modal("show");
   });
@@ -27,11 +25,16 @@ var diffY = 5;
 var stage;
 var eggs;
 var eggsMatrix;
-var points;
+
+var ViewModel = {
+  resultsList: ko.observableArray(),
+  points: ko.observable(),
+  colors: ko.observableArray()
+};
 
 function init() {
   stage = new createjs.Stage("eggsCanvas");
-  var wrapper = $(".wrapper");
+  var wrapper = $(".boardWrapper");
   stage.canvas.height = wrapper.height();
   stage.canvas.width = wrapper.width();
   var eggWidth = (wrapper.width() - marginX) / countX - diffX;
@@ -63,8 +66,24 @@ function initGame(eggWidth, eggHeight) {
 
   stage.addChild(eggs);
 
-  points = 0;
-  $(".points").text(points);
+  ViewModel.points(0);
+  $.get("results.php").done(function(data) {
+    ViewModel.resultsList(data.sort(compareResults));
+  });
+
+  var colorCount = {};
+  for(var i=0; i<eggs.children.length; i++) {
+    var egg = eggs.children[i];
+    if(colorCount[egg.color] == undefined)
+      colorCount[egg.color] = 1;
+    else
+      colorCount[egg.color]++;
+  }
+  var tmp = [];
+  for(var i=0; i<colors.length; i++) {
+    tmp.push({color:colors[i], count:colorCount[colors[i]]});
+  }
+  ViewModel.colors(tmp);
 }
 
 function createEgg(eggWidth, eggHeight, positionX, positionY, indX, indY) {
@@ -199,8 +218,9 @@ function updateEggs(eggWidth, eggHeight) {
 }
 
 function updatePoints(eggsCount) {
+  var points = ViewModel.points();
   points += calculatePoints(eggsCount);
-  $(".points").text(points);
+  ViewModel.points(points);
 }
 
 function calculatePoints(n) {
@@ -217,4 +237,8 @@ function checkGameOver() {
 
 function showGameOver() {
   $("#resultModal").modal("show");
+}
+
+function compareResults(res1,res2) {
+  return res2.result-res1.result;
 }

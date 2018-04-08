@@ -10,9 +10,11 @@
   <link rel="stylesheet" type="text/css" href="./eggs.css">
 </head>
 <body>
-  <div class="wrapper">
-    <div class="pointsWrapper">Twoje punkty: <span class="points">0</span></div>
-    <canvas id="eggsCanvas" class="canvas"></canvas>
+  <div class="gameWrapper">
+    <div class="pointsWrapper">Twoje punkty: <span data-bind="text: points">0</span></div>
+    <div class="boardWrapper">
+      <canvas id="eggsCanvas" class="canvas"></canvas>
+    </div>
   </div>
 
   <div class="modal backdrop" id="resultModal">
@@ -25,9 +27,20 @@
           </button>
         </div>
         <div class="modal-body">
+          <div class="result">
           <p>Udało Ci się uzykać <span class="points"></span> punktów.</p>
-          <img src="img/overImg.png" class="overImg" />
-          <p>Czy chcesz spróbować jeszcze raz?</p>
+            <img src="img/overImg.png" class="overImg" />
+            <p>Czy chcesz spróbować jeszcze raz?</p>
+          </div>
+          <div class="resultsList">
+            <table>
+              <thead><tr><th>Użytkownik</th><th>Wynik</th></tr></thead>
+              <tbody data-bind="foreach: resultsList">
+                <td data-bind="text: user"></td>
+                <td data-bind="text: result"></td>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary play-again">Jeszcze raz</button>
@@ -36,7 +49,7 @@
       </div>
     </div>
   </div>
-
+<!-- 
   <div class="modal backdrop" id="resultsListModal">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -61,12 +74,23 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div>
     <button class="btn btn-primary" id="getButton">GET</button>
     <button class="btn btn-primary" id="postButton">POST</button>
   </div>
+  <div class="debug">
+    <p>Punkty: <span data-bind="text: points"></span></p>
+    <table>
+      <thead><th>color</th></thead>
+      <tbody data-bind="foreach: colors">
+        <td data-bind="text: color"></td>
+        <td data-bind="text: count"></td>
+      </tbody>
+    </table>
+  </div>
+  <!-- wzorzec command -->
 </body>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

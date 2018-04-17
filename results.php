@@ -16,6 +16,7 @@
     $json = json_decode($file_content, true);
     if(array_key_exists("user", $post) && array_key_exists("result", $post) && is_numeric($post["result"])) {
       $post["result"] = intval($post["result"]);
+      $post["current"] = false;
       array_push($json, $post);
       file_put_contents($file_name, json_encode($json));
     }

@@ -259,9 +259,12 @@ function checkGameOver() {
 
 function showGameOver() {
   $("#resultModal").modal("show");
-  var data = ViewModel.resultsList();
-  data.push({user: ViewModel.nick(), result: ViewModel.points(), current: true});
-  handleData(data);
+  var list = ViewModel.resultsList();
+  list.map(x=>x.current = false);
+  var data = {user: ViewModel.nick(), result: ViewModel.points(), current: true};
+  $.post("results.php",data);
+  list.push(data);
+  handleData(list);
 }
 
 function compareResults(res1,res2) {

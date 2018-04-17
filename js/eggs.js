@@ -250,7 +250,7 @@ function calculatePoints(n) {
   var x1 = Math.pow(n,3)/3;
   var x2 = Math.pow(n,2);
   var x3 = n+n/2+n/6;
-  return x1-x2+x3;
+  return Math.round(x1-x2+x3);
 }
 
 function checkGameOver() {

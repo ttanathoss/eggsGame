@@ -63,7 +63,7 @@ function init() {
 
   initGame(eggWidth, eggHeight);
 
-  createjs.Ticker.setFPS(120);
+  createjs.Ticker.setFPS(30);
   createjs.Ticker.addEventListener("tick", stage);
 
   $("#resultModal .play-again").click(function() {
